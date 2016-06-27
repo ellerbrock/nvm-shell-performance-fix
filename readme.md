@@ -1,20 +1,18 @@
-Shell Performance Fix for nvm Initialisation [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=102)](https://github.com/ellerbrock/open-source-badge/) [![Gitter Chat](https://badges.gitter.im/frapsoft/frapsoft.svg)](https://gitter.im/frapsoft/frapsoft/)
-====================================================================================================================================================================================================================================================================================
+# Shell Performance Fix for nvm Initialisation [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=102)](https://github.com/ellerbrock/open-source-badge/) [![Gitter Chat](https://badges.gitter.im/frapsoft/frapsoft.svg)](https://gitter.im/frapsoft/frapsoft/)
 
-After installing nvm and sourcing the nvm.sh file with each new Shell instance (via `.bashrc`, `.zshrc` ...) really slows down the Startup time. Here a simple fix:
+**Problem**: Slow Shell Startup after adding the source nvm.sh command on initial start (.bashrc, .zshrc ...)
+
+**Fix**: Load the nvm enviroment only when nvm is called for the first time.
+
+**Info:** The nvm enviroment have to be loaded to get access to the global installed nvm modules.
 
 ```
 # nvm shell performance fix
-# to work you have to uncomment / update the path to your npm.sh file
 nvm()
 {
   if [[ `command -v nvm`-ne"nvm" ]]; then
     echo "loading nvm enviroment ..."
-    # installed with Homebrew
-    # source "$(brew --prefix nvm)/nvm.sh"
-
-    # installed directly
-    # source ~/.nvm/nvm.sh
+    source ~/.nvm/nvm.sh
     nvm $*
   fi
 }
